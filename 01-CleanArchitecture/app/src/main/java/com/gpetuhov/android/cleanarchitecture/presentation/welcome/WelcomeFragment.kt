@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.gpetuhov.android.cleanarchitecture.R
 import com.gpetuhov.android.cleanarchitecture.utils.Logger
 import com.gpetuhov.android.cleanarchitecture.utils.extensions.setVisible
+import com.gpetuhov.android.cleanarchitecture.utils.extensions.toast
 import kotlinx.android.synthetic.main.fragment_welcome.*
 
 class WelcomeFragment : Fragment() {
@@ -33,6 +34,8 @@ class WelcomeFragment : Fragment() {
 
     private fun subscribeViewModel() {
         viewModel.isMessageLoading.observe(viewLifecycleOwner, { isLoading -> onMessageLoading(isLoading) })
+        viewModel.messageResult.observe(viewLifecycleOwner, { message -> onMessageResult(message) })
+        viewModel.messageError.observe(viewLifecycleOwner, { errorMessageId -> onMessageError(errorMessageId) })
     }
 
     private fun onMessageLoading(isLoading: Boolean) {
@@ -46,5 +49,24 @@ class WelcomeFragment : Fragment() {
 
     private fun showProgress(isVisible: Boolean) {
         get_message_progress.setVisible(isVisible)
+    }
+
+    private fun onMessageResult(message: String?) {
+        message?.let {
+            // TODO
+            toast(it)
+
+            // Needed to prevent message from showing again after screen rotation
+            viewModel.resetEvents()
+        }
+    }
+
+    private fun onMessageError(errorMessageId: Int?) {
+        errorMessageId?.let {
+            toast(it)
+
+            // Needed to prevent error from showing again after screen rotation
+            viewModel.resetEvents()
+        }
     }
 }

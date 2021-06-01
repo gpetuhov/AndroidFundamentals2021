@@ -54,7 +54,7 @@ class WelcomeViewModel : ViewModel() {
         }
     }
 
-    private fun resetEvents() {
+    fun resetEvents() {
         _isMessageLoading.postValue(false)
         _messageResult.postValue(null)
         _messageError.postValue(null)
