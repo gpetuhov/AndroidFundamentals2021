@@ -23,6 +23,9 @@
         android:name="com.gpetuhov.android.cleanarchitecture.presentation.message.MessageFragment"
         android:label="MessageFragment"
         tools:layout="@layout/fragment_message" >
+        <argument
+            android:name="message"
+            app:argType="com.gpetuhov.android.cleanarchitecture.domain.models.message.Message"/>
     </fragment>
 
 </navigation>

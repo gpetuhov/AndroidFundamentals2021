@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.gpetuhov.android.cleanarchitecture.R
+import com.gpetuhov.android.cleanarchitecture.domain.models.message.Message
 import com.gpetuhov.android.cleanarchitecture.utils.Logger
 import com.gpetuhov.android.cleanarchitecture.utils.extensions.setVisible
 import com.gpetuhov.android.cleanarchitecture.utils.extensions.toast
@@ -53,9 +54,9 @@ class WelcomeFragment : Fragment() {
         get_message_progress.setVisible(isVisible)
     }
 
-    private fun onMessageResult(message: String?) {
+    private fun onMessageResult(message: Message?) {
         message?.let {
-            navigateToMessageFragment()
+            navigateToMessageFragment(it)
 
             // Needed to prevent message from showing again after screen rotation
             viewModel.resetEvents()
@@ -71,8 +72,8 @@ class WelcomeFragment : Fragment() {
         }
     }
 
-    private fun navigateToMessageFragment() {
-        val action = WelcomeFragmentDirections.actionWelcomeFragmentToMessageFragment()
+    private fun navigateToMessageFragment(message: Message) {
+        val action = WelcomeFragmentDirections.actionWelcomeFragmentToMessageFragment(message)
         navigate(action)
     }
 

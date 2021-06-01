@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gpetuhov.android.cleanarchitecture.App
 import com.gpetuhov.android.cleanarchitecture.R
+import com.gpetuhov.android.cleanarchitecture.domain.models.message.Message
 import com.gpetuhov.android.cleanarchitecture.domain.usecase.message.InputValidationException
 import com.gpetuhov.android.cleanarchitecture.domain.usecase.message.MessageUseCase
 import kotlinx.coroutines.*
@@ -19,11 +20,11 @@ class WelcomeViewModel : ViewModel() {
     // Public properties should NOT be MutableLiveData,
     // so that outer classes cannot modify their values.
     val isMessageLoading: LiveData<Boolean>
-    val messageResult: LiveData<String?>
+    val messageResult: LiveData<Message?>
     val messageError: LiveData<Int?>
 
     private val _isMessageLoading = MutableLiveData<Boolean>()
-    private val _messageResult = MutableLiveData<String?>()
+    private val _messageResult = MutableLiveData<Message?>()
     private val _messageError = MutableLiveData<Int>()
 
     private var getMessageJob: Job? = null
@@ -66,7 +67,7 @@ class WelcomeViewModel : ViewModel() {
         }
     }
 
-    private suspend fun postMessageResult(message: String) {
+    private suspend fun postMessageResult(message: Message) {
         withContext(Dispatchers.Main) {
             _isMessageLoading.postValue(false)
             _messageResult.postValue(message)
